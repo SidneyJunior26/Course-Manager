@@ -1,0 +1,82 @@
+<style>
+    .form-group {
+        margin-bottom: 10px;
+    }
+</style>
+
+<h2>Course Info</h2>
+
+<hr>
+
+<form #courseForm="ngForm" *ngIf="courseInfo">
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-from-label">Name:</label>
+        <div class="col-sm-10">
+            <input [(ngModel)]="courseInfo.name" required name="name" #courseName="ngModel"
+                [ngClass]="{'is-invalid': courseName.invalid}" class="form-control">
+
+            <div class="invalid-feedback">
+                <span>Course name is required.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-from-label">Price:</label>
+        <div class="col-sm-10">
+            <input [(ngModel)]="courseInfo.price" required name="price" #coursePrice="ngModel" type="number"
+                [ngClass]="{'is-invalid': coursePrice.invalid}" class="form-control">
+
+            <div class="invalid-feedback">
+                <span>Course price is required.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-from-label">Rating:</label>
+        <div class="col-sm-10">
+            <input [(ngModel)]="courseInfo.rating" required name="rating" #courseRating="ngModel" type="number"
+                [ngClass]="{'is-invalid': courseRating.invalid}" class="form-control">
+
+            <div class="invalid-feedback">
+                <span>Course rating is required.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-sm-2 col-from-label">Description:</label>
+        <div class="col-sm-10">
+            <textarea [(ngModel)]="courseInfo.description" required name="description" #courseDescription="ngModel"
+                [ngClass]="{'is-invalid': courseDescription.invalid}" class="form-control"></textarea>
+
+            <div class="invalid-feedback">
+                <span>Course description is required.</span>
+            </div>
+        </div>
+    </div>
+
+    <button [disabled]="courseForm.invalid" (click)="save()" class="btn btn-success me-2">Save</button>
+    <button class="btn btn-secondary" [routerLink]="'/courses'">Cancel</button>
+
+</form>
+
+<div *ngIf="message" class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+    <strong>Success! </strong>
+    Record saved.
+    <hr>
+    <button [routerLink]="'/courses'" class="btn btn-primary" type="button" data-dismiss="alert" aria-label="Close" (click)="removeMessage()">
+        <span aria-hidden="true">Back to list</span>
+    </button>
+</div>
+
+<div *ngIf="messageError" class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 10px;">
+    <strong>Error! </strong>
+    There was an error saving.
+    <hr>
+    <button class="btn btn-danger" type="button" data-dismiss="alert" aria-label="Close" (click)="removeMessageError()">
+        <span aria-hidden="true">Close</span>
+    </button>
+</div>

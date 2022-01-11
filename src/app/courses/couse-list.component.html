@@ -1,0 +1,72 @@
+<h2>Course List</h2>
+
+<div class="form-group row">
+    <label class="col-sm-2 col-from-label">Filter By:</label>
+    <div class="col-sm-10">
+        <input [(ngModel)]="filter" class="form-control">
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Code</th>
+            <th>Release Date</th>
+            <th>Rating</th>
+            <th class="text-center">Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let course of filteredCourses">
+            <td><img [src]="course.imageUrl" width="40" height="40"></td>
+            <td>{{ course.name }}</td>
+            <td>{{ course.price }}</td>
+            <td>{{ course.code }}</td>
+            <td>{{ course.releaseDate | date: 'dd/MM/yyyy' }}</td>
+            <td>
+                <app-star [rating]="course.rating"></app-star>
+            </td>
+            <td class="text-center">
+                <a [routerLink]="['/courses/info', course.id]" class="btn btn-primary"
+                    style="margin-right: 2px;">Edit</a>
+                <button (click)="confirmation(true, course.id, course.name)" class="btn btn-danger">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="messageConfirmation" class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Atention! </strong>
+    <span>Do you want to delete the course <strong>{{ courseName }}</strong></span>
+    <hr>
+    <button class="btn btn-primary" type="button" data-dismiss="alert" aria-label="Close" (click)="deleteById()"
+        style="margin-right: 2px;">
+        <span aria-hidden="true">Yes</span>
+    </button>
+    <button class="btn btn-secondary" type="button" data-dismiss="alert" aria-label="Close"
+        (click)="confirmation(false)">
+        <span aria-hidden="true">Cancel</span>
+    </button>
+</div>
+
+<div *ngIf="message" class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>Success! </strong>
+    Record deleted.
+    <hr>
+    <button [routerLink]="'/courses'" class="btn btn-primary" type="button" data-dismiss="alert" aria-label="Close"
+        (click)="removeMessage()">
+        <span aria-hidden="true">Close</span>
+    </button>
+</div>
+
+<div *ngIf="messageError" class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Error! </strong>
+    There was an error deleting.
+    <hr>
+    <button class="btn btn-danger" type="button" data-dismiss="alert" aria-label="Close" (click)="removeMessageError()">
+        <span aria-hidden="true">Close</span>
+    </button>
+</div>
